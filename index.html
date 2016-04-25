@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Address Book</title>
+</head>
+
+<body>
+	Name:
+	<input id="name">
+	<br> Address:
+	<input id="address">
+	<br> Phone:
+	<input id="phone">
+	<br> E-Mail:
+	<input id="email">
+	<br>
+	<button id="newPerson">New Person</button>
+	<button id="newBusiness">New Business</button>
+	<br>
+<!--	<input id="searchIn"><button id="searchBtn">Search</button>-->
+	<div id="book">Recorded Addresses
+		<div id="person">
+		</div>
+		<div id="business">
+		</div>
+	</div>
+
+
+	<script>
+		function Person(name, address, phone, email) {
+			this.name = name;
+			this.address = address;
+			this.phone = phone;
+			this.email = email;
+		}
+
+		function Business(name, address, phone, email) {
+			this.name = name;
+			this.address = address;
+			this.phone = phone;
+			this.email = email;
+		}
+
+		function Model() {
+			this.persons = [];
+			this.businesses = [];
+		}
+
+		function Controller(model) {
+			this.createPerson = function (perName, perAdd, perPhone, perEmail) {
+				model.persons.push(new Person(perName, perAdd, perPhone, perEmail));
+			}
+			this.createBusiness = function (busName, busAdd, busPhone, busEmail) {
+				model.businesses.push(new Business(busName, busAdd, busPhone, busEmail));
+			}
+			this.getPerson = function (i) {
+				return model.persons;
+			}
+			this.getBusiness = function (j) {
+				return model.businesses;
+			}
+		}
+
+		function View(controller) {
+			this.showPerson = function (i) {
+				var world = document.getElementById("person");
+				var person = controller.getPerson()[i];
+				var p = document.createElement("div");
+				p.className = "pers";
+				p.innerHTML = person.name + " " + person.address +" " + person.phone +" " + person.email;
+				world.appendChild(p);
+			}
+			this.showBusiness = function (j) {
+				var bworld = document.getElementById("business");
+				var business = controller.getBusiness()[j];
+				var b = document.createElement("div");
+				b.className = "busi";
+				b.innerHTML = business.name + " " + business.address + " " + business.phone + " " + business.email;
+				bworld.appendChild(b);
+
+			}
+			this.showAll = function () {
+				var world = document.getElementById("person");
+                world.innerHTML = "";
+                for (var i = 0; i < controller.getPerson().length; i++) {
+                    this.showPerson(i);
+                }
+				var world = document.getElementById("business");
+                world.innerHTML = "";
+                for (var j = 0; j < controller.getBusiness().length; j++) {
+                    this.showBusiness(j);
+                }
+			}
+			this.createPerson = function () {
+				
+				var perName = document.getElementById("name").value;
+				var perAdd = document.getElementById("address").value;
+				var perPhone = document.getElementById("phone").value;
+				var perEmail = document.getElementById("email").value;
+				controller.createPerson(perName, perAdd, perPhone, perEmail);
+				this.showAll();
+
+			}
+			this.createBusiness = function () {
+				
+				var busName = document.getElementById("name").value;
+				var busAdd = document.getElementById("address").value;
+				var busPhone = document.getElementById("phone").value;
+				var busEmail = document.getElementById("email").value;
+				controller.createBusiness(busName, busAdd, busPhone, busEmail);
+				this.showAll();
+			}
+			
+			this.searchAll = function () {
+				var seaStr = document.getElementById("searchIn");
+				for (var i = 0 ; i < controller.getPerson; i++) {
+					
+				}
+			}
+//HOLDING SPOT FOR DELETE BUTTON
+//			this.createDelBtn = function (person) {
+//				var delBtn = document.createElement("button");
+//				var t = document.createTextNode("Feed");
+//				var self = this;
+//				feedBtn.onclick = function () {
+//					pet.feed();
+//					self.showAllPets();
+//				}
+//				return feedBtn;
+//			}
+
+		}
+
+		var m = new Model();
+		var c = new Controller(m);
+		var v = new View(c);
+
+		document.getElementById("newPerson").onclick = function () {
+			v.createPerson();
+		}
+		document.getElementById("newBusiness").onclick = function () {
+			v.createBusiness();
+		}
+		
+//		document.getElementById("searchBtn").onclick = function () {
+//			v.searchAll
+//		}
+	</script>
+</body>
+
+</html>
